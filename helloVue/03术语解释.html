@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- 1.插值表达式 {{}} -->
+    <div id="app">
+        <!-- 1.1纯变量 -->
+        <p>{{ name }}</p>
+        <!-- 1.2赋值形式 -->
+        <p>{{ name = '是李德民' }}</p>
+        <!-- 1.3逻辑判断:得到true或false -->
+        <p>{{ money > 10000 }}</p>
+        <!-- 1.4逻辑运算 -->
+        <p>{{ money - house }}</p>
+        <!-- 1.5方法调用 -->
+        <p>{{ getName() }}</p>
+        <!-- 1.6三元表达式 -->
+        <p>{{ money > 10000 ? '入职' : '离职'}}</p>
+    </div>
+</body>
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            name: '李德民',
+            money: 10000,
+            house: 3000
+        },
+        methods: {
+            getName() {
+                return this.name
+            }
+        }
+    })
+
+    app.money = 11000
+</script>
+
+</html>
