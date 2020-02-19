@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        支付方式: <input type="radio">{{alipay}} <input type="radio">{{wechat}} <br>
+        <button @click='f1'>支付宝支付</button>
+        <button @click='f2'>微信支付</button>
+    </div>
+</body>
+<script>
+    // 1.实例化一个Vue实例
+    // 2.定义两个属性 alipay wechat
+    // 3.定义两个方法 f1() f2()
+    let app = new Vue({
+        el: '#app',
+        data: {
+            alipay: '支付宝',
+            wechat: '微信支付'
+        },
+        methods: {
+            f1() {
+                alert(this.alipay);
+            },
+            f2() {
+                alert(this.wechat);
+            }
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <h1 v-text='hello'></h1>
+        <p>名字:{{name}}</p>
+        <p>年龄:{{age}}</p>
+        <p>体重:{{weight}}</p>
+        <p>身高:{{height}}</p>
+        <p>座右铭:{{message}}</p>
+        <p>薪资:{{money}}</p>
+        <p>排行:{{list}}</p>
+    </div>
+    <script>
+        let app = new Vue({
+            // 挂载实例
+            el: '#box',
+            // 响应式数据(必须在data对象中声明)
+            // 可以使用 Vue实例名.$data.属性名 取到原始数据
+            // 等价于 Vue实例名.属性名
+            data: {
+                hello: 'Hello World',
+                name: '李德民',
+                age: 18,
+                weight: '62kg',
+                height: '',
+                message: '天生我材必有用',
+                money: '13000',
+                list: ['李德民', '盖茨', '巴菲特']
+            },
+            // 所有方法都需要在methods对象中定义
+            // 方法中的this自动绑定Vue实例
+            methods: {
+                // getName() {}  ES6写法
+                // getName:function(){}  ES5写法
+                // Vue实例.方法名 调用方法
+                // Vue实例即代理了所有属性，也代理了所有方法，注意重名覆盖
+                // 注意不应该使用箭头函数，否则会改变this指向
+                getName() {
+                    let age = this.getAge()
+                    alert(`${this.name}:${age},启步学习暂时告一段落了`)
+                },
+                getAge() {
+                    return this.age
+                }
+            }
+        })
+
+        //响应式数据，通过 实例名.属性名 = 新的值 修改数据
+        app.height = 188
+        app.message = '千金散去还复来'
+        app.money = 1500
+
+        // 常见错误：
+        // 1.使用的变量必须在data中定义，否则就会报错：Property or method "height" is not defined on the instance but referenced during render. Make sure that this property is reactive, either in the data option, or for class-based components, by initializing the property.
+    </script>
+</body>
+
+</html>
