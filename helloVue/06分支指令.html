@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .light {
+            width: 100%;
+            height: 100vh;
+            background-color: skyblue;
+        }
+
+        .night {
+            width: 100%;
+            height: 100vh;
+            background-color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 条件渲染:开灯关灯例子 -->
+    <div id="app">
+        <button @click='close'>开/关灯</button>
+        <!-- <div class="light" v-if='light'></div>
+        <div class="night" v-else></div> -->
+        <div class="light" v-show='light'></div>
+        <div class="night" v-show='!light'></div>
+        <!-- template 不生成任何实质的标签 -->
+        <template v-if='showMessage'>
+            <p>你好</p>
+            <p>你好</p>
+            <p>你好</p>
+        </template>
+    </div>
+
+</body>
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: {
+            light: true,
+            showMessage: true
+        },
+        methods: {
+            close() {
+                this.light = !this.light
+            }
+        }
+    })
+
+    // v-if 分支控制，决定是否要渲染标签到页面
+    // v-show 标签已经全部渲染到页面，决定是否要显示出来
+    // template标签，不会在页面生成实际的标签
+</script>
+
+</html>

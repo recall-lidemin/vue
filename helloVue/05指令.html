@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- v-text = 'name' 的 name 是变量表达式 -->
+        <!-- 如果想要一个静态字符串,需要再加引号，应该这样 v-text = " 'string' " -->
+        <p v-text='name'></p>
+        <p v-text="'name'"></p>
+        <!-- 普通属性 name 是字符串 -->
+        <p title='name'>{{name}}</p>
+        <!-- v-html -->
+        <p v-html='htmlstr'></p>
+    </div>
+</body>
+<script>
+    // Directives
+    // 带有 v- 前缀的特殊属性
+    // 一般的指令后面的值都是变量表达式
+    let app = new Vue({
+        el: '#app',
+        data: {
+            name: '李德民',
+            htmlstr: '<span style="color:red">这是一个html</span>'
+        },
+        methods: {
+
+        }
+    })
+</script>
+
+</html>
