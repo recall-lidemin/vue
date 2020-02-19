@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{ '你知道前端的水有多深吗' }}</p>
+        <p>{{showmessage}}</p>
+        <p>把123实现输出：321</p>
+        <!-- 1.用方法实现 -->
+        <p>{{ reverseList() }}</p>
+        <!-- 2.插值表达式 -->
+        <p>{{ list.join('').split('').reverse().join('') }}</p>
+    </div>
+</body>
+<script>
+    // ------------实例练习--------------------------
+    // 1.实例化一个Vue实例
+    // 2.输出:你知道前端的水有多深吗，false，321(重要)
+    let app = new Vue({
+        el: '#app',
+        data: {
+            message: '程序员',
+            showmessage: false,
+            list: [1, 2, 3]
+        },
+        methods: {
+            reverseList() {
+                let newarr = [...this.list]
+                return newarr.reverse().join('')
+            }
+        }
+    })
+</script>
+
+</html>
