@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <button @click='start'>开始轮播</button>
+        <button @click='end'>结束轮播</button> <br>
+        <div class="img">
+            <img :src="list[curIndex]" alt="">
+        </div>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: [
+                    'https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=154365247,627249924&fm=26&gp=0.jpg',
+                    'https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2725117807,2044364177&fm=26&gp=0.jpg',
+                    'https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1814595453,2550018430&fm=26&gp=0.jpg',
+                    'https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=4138027938,3557334215&fm=26&gp=0.jpg'
+                ],
+                timer: null,
+                curIndex: 0
+            },
+            methods: {
+                start() {
+                    let fun = () => {
+                        this.curIndex++
+                        if (this.curIndex > this.list.length - 1) {
+                            this.curIndex = 0
+                        }
+
+                    }
+                    if (this.timer) {
+                        return
+                    }
+                    this.timer = setInterval(fun, 1000)
+                },
+                end() {
+                    clearInterval(this.timer)
+                    this.timer = null
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
