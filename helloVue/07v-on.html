@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button @click='handle'>直接写方法名形式</button>
+        <!-- 应用于需要传参场景 -->
+        <button @click='hand($event)'>方法调用形式</button> <br>
+
+        <!-- 小练习 -->
+        <input type="text" @input='change($event)'><button @click='btn'>按钮</button>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'vue居然能做这种事',
+                inputText: ''
+            },
+            methods: {
+                handle() {
+                    // 默认第一个参数是事件本身
+                    console.log(event);
+                    console.log('直接写方法名形式');
+                },
+                hand(event) {
+                    // 可以通过 $event 传递事件本身
+                    console.log(event);
+                    console.log('方法调用形式');
+                },
+                change(event) {
+                    // 触发该事件的元素的value属性
+                    console.log(event.target.value);
+                    this.inputText = event.target.value
+                },
+                btn() {
+                    console.log(this.inputText);
+
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
