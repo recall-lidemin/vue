@@ -15,8 +15,15 @@
         <!-- 应用于需要传参场景 -->
         <button @click='hand($event)'>方法调用形式</button> <br>
 
+        <!-- 事件修饰符 -->
+        <!-- .prevent阻止默认行为 -->
+        <!-- .stop阻止冒泡行为 -->
+        <!-- .once只触发一次 -->
+        <a href="http://www.baidu.com" @click.prevent>百度一下</a>
+
         <!-- 小练习 -->
         <input type="text" @input='change($event)'><button @click='btn'>按钮</button>
+
     </div>
 
     <script>

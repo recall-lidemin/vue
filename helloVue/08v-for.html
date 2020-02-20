@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- v-for 数组 -->
+        <ul>
+            <!-- 循环生成谁，就在谁身上写 v-for -->
+            <li v-for='item in list'>
+                {{item}}
+            </li>
+        </ul>
+        <ul>
+            <li v-for='(item,index) in list'>
+                {{item}}排名第{{index+1}}位
+            </li>
+        </ul>
+        <!-- v-for 对象 -->
+        <div>
+            <ul>
+                <!-- 第一个参数是：value值 
+                     第二个参数是：key是键 
+                     第三个参数是：index索引 -->
+                <li v-for='(value,key,index) in girlFriend'>
+                    {{key}}: {{value}} ------ {{index}}
+                </li>
+            </ul>
+        </div>
+        <!-- 在使用v-for时，要给遍历的每个元素加一个key，保证每个选项是唯一的
+             id或索引都可
+        -->
+        <ul>
+            <li v-for='(item,index) in list' :key='index'>
+                {{item}}排名第{{index+1}}位
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: ['邢菲', '貂蝉', '昭君'],
+                girlFriend: {
+                    name: '上杉绘梨衣',
+                    height: '170cm',
+                    weight: '55kg',
+                    money: '200'
+                }
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
