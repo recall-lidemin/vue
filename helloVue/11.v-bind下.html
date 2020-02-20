@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .act {
+            color: aqua;
+            width: 200px;
+            height: 30px;
+            background-color: #ccc;
+        }
+
+        .default {
+            font-size: 20px;
+        }
+
+        .bor {
+            border: 1px solid #850000;
+        }
+
+        .fonts {
+            font-size: 20px;
+        }
+
+        .bgc {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- v-bind绑定class 对象语法
+            语法： :class="{key:boolean}"
+            key是class名称，bollean是布尔值，true则应用该class，否则不应用
+        -->
+        <div :class="{ act:isActive,default:isDefault }" @click="change">今天的内容好无聊</div>
+
+        <!-- v-bind绑定class 数组语法
+            语法： :class="[class变量1,class变量2,...]"
+        -->
+        <div :class="[bor,defa]">v-bind绑定class 数组语法</div>
+
+        <!-- v-bind绑定style 对象用法 
+            :style = "{css属性名：变量名}"
+            ES6语法,属性名和变量名一样时 :style = "{变量名}"
+        -->
+        <div :style="{fontSize}">v-bind绑定style 对象用法</div>
+
+        <!-- v-bind绑定style 数组用法
+            :style = "[对象1,对象2,...]"
+        -->
+        <div :style="[fonts,backgroundColor]">v-bind绑定style 对象用法</div>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                isActive: false,
+                isDefault: true,
+                bor: 'bor',
+                defa: 'default',
+                fontSize: 30 + 'px',
+                fonts: {
+                    color: 'green',
+                    fontSize: '30px'
+                },
+                backgroundColor: {
+                    backgroundColor: '#850000'
+                }
+            },
+            methods: {
+                change() {
+                    this.isActive = !this.isActive
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        #app {
+            margin: 50px 0;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <p v-text='name'></p> -->
+        <input type="text" v-model='name'><br>
+        <input type="text" v-model='pwd'> <br>
+
+        <!-- v-model原理,使用  v-bind和v-on实现v-model双向绑定 -->
+        <input type="text" @input='change' :value='msg'>
+        <p>{{msg}}</p>
+
+        <!-- checkbox -->
+        绑定一个
+        <input type="checkbox" v-model='check' name="" id=""> <br>
+        绑定多个：需要给定value值
+        <input type="checkbox" v-model='checks' name="" id="" value="邢菲">邢菲
+        <input type="checkbox" v-model='checks' name="" id="" value="貂蝉">貂蝉
+        <input type="checkbox" v-model='checks' name="" id="" value="昭君">昭君
+        <p>{{checks}}</p>
+
+        <!-- radio -->
+        绑定radio也需要给定value
+        <input type="radio" v-model='radio' name="sex" value="man">男人
+        <input type="radio" v-model='radio' name="sex" value="women">女人
+        <p>{{radio}}</p>
+
+        <!-- select -->
+        绑定select
+        <select name="" id="" v-model='select'>
+            <option value="前端">前端</option>
+            <option value="测试">测试</option>
+            <option value="UI">UI</option>
+            <option value="运维">运维</option>
+        </select>
+        <p>{{select}}</p>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '',
+                pwd: '',
+                msg: '',
+                check: true, //绑定单个checkbox
+                checks: [], //多个checkbox绑定的时候是一个数组
+                radio: '', //绑定radio
+                select: '前端'
+            },
+            methods: {
+                change() {
+                    this.msg = event.target.value
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
