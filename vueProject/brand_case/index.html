@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <link rel="stylesheet" href="./bootstrap.min.css">
+    <script src="./moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .app {
+            margin: 50px auto;
+            width: 980px;
+
+        }
+
+        .top {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app">
+        <h2>大国品牌</h2>
+        <div class="form-inline top">
+            <div class="form-group">
+                <label for="exampleInputName2">品牌</label>
+                <input v-model='brand' v-focus type="text" class="form-control" id="exampleInputName2"
+                    placeholder="请输入品牌名称">
+            </div>
+            <button type="button" class="btn btn-info" @click='add'>添加</button>
+            <div class="form-group">
+                <label for="exampleInputEmail2">检索</label>
+                <input v-model='search' type="text" class="form-control" id="exampleInputEmail2" placeholder="请输入检索内容">
+            </div>
+
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>品牌</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for='(item,index) in queryList' :key='index'>
+                    <th scope="row">{{ index+1 }}</th>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.date | dateFormat }}</td>
+                    <td>
+                        <a href="#" @click.prevent='del(index)'>删除</a>
+                    </td>
+                </tr>
+                <tr v-if='!list.length'>
+                    <td colspan='4'>没有数据</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                list: [{
+                    name: '奔驰',
+                    date: Date.now()
+                }],
+                brand: '',
+                search: ''
+            },
+            methods: {
+                add() {
+                    this.list.unshift({
+                        name: this.brand,
+                        date: Date.now()
+                    })
+                    this.brand = ''
+                },
+                del(id) {
+                    this.list = this.list.filter((item, index) => {
+                        if (index !== id) {
+                            return item
+                        }
+                    })
+                }
+            },
+            directives: {
+                'focus': {
+                    inserted(dom) {
+                        dom.focus()
+                    }
+                }
+            },
+            filters: {
+                dateFormat(value) {
+                    return moment(value).format("YYYY-MM-DD HH:mm:ss")
+                }
+            },
+            computed: {
+                queryList() {
+                    return this.list.filter((item, index) => {
+                        return item.name.includes(this.search)
+                    })
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
