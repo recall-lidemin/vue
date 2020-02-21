@@ -8,6 +8,7 @@
 // 存在浏览器兼容问题，浏览器不支持
 import $ from 'jquery'
 import './css/index.css'
+// import './css/index.less'
 
 $(function () {
     $('li:odd').css('backgroundColor', 'green')
