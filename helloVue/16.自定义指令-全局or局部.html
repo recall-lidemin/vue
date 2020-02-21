@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p v-mydirect='name'></p>
+        <input type="text" v-model='name'>
+        <img src="" alt="" v-ldm>
+        <input type="text" v-focus>
+    </div>
+
+    <script>
+        // 系统指令
+        // 自定义指令：
+        // 使用场景：需要对普通DOM元素进行操作，就会用到自定义指令
+        // 语法：Vue.directive('指令名称',{inserted,update})   指令名称不需要加v-前缀，用的时候需要加
+        Vue.directive("mydirect", {
+            // 表示 v-myDirective 指令作用的元素，插入DOM之后，就会执行 inserted 函数
+            inserted(dom, option) {
+                // dom表示 v-myDirective 指令作用的DOM元素对象
+                // option表示指令后面对应的表达式内容
+                dom.innerText = option.value
+            },
+            // 数据变化时，会执行update
+            update(dom, option) {
+                dom.innerText = option.value
+            }
+        })
+
+        Vue.directive('focus', {
+            inserted(dom) {
+                dom.focus()
+            }
+        })
+
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                name: '李逵'
+            },
+            methods: {},
+            // 局部自定义指令
+            directives: {
+                'ldm': {
+                    inserted(dom, option) {
+                        // dom就是 img对象
+                        dom.src =
+                            'https://dss0.bdstatic.com/6Ox1bjeh1BF3odCf/it/u=3066876868,2142971720&fm=74&app=80&f=JPEG&size=f121,140?sec=1880279984&t=3b3742bb5434f95ef5d3b53a5a8baa7f'
+                        // dom.style.width = '200px'
+                        // dom.style.height = '200px'
+                        dom.style.borderRadius = '50%'
+                    },
+                    update(dom, option) {
+
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
