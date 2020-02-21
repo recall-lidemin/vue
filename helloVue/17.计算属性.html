@@ -10,14 +10,83 @@
 </head>
 
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <!-- 插值表达式形式 -->
+        <p>{{ name.split("").reverse().join("") }}</p>
+
+        <!-- 方法 封装了逻辑 可复用灵活
+             但会重复调用方法，效率不如计算属性
+        -->
+        <p>{{ reverse() }}</p>
+        <p>{{ reverse() }}</p>
+        <p>{{ reverse() }}</p>
+        <p>{{ reverse() }}</p>
+
+        <!-- 计算属性  可复用灵活
+             并且只会执行一次,效率更高
+        -->
+        <p>{{ reverseStr }}</p>
+        <p>{{ reverseStr }}</p>
+        <p>{{ reverseStr }}</p>
+        <p>{{ reverseStr }}</p>
+
+        <!-- 计算属性实现计算税后工资 -->
+        <p>税前工资：{{ money }}</p>
+        <p>公积金扣款：{{ gMoney }}</p>
+        <p>养老保险：{{ yMoney }}</p>
+        <p>医疗保险：{{ dMoney }}</p>
+        <p>个人所得税：{{ sMoney }}</p>
+        <p>税后工资：{{ rMoney }}</p>
+    </div>
 
     <script>
         let vm = new Vue({
             el: '#app',
-            data: {},
-            methods: {}
+            data: {
+                name: '我爱北京天安门',
+                money: 10000
+            },
+            methods: {
+                reverse() {
+                    console.log('执行方法');
+                    return this.name.split('').reverse().join('')
+                }
+            },
+            // 所有计算属性都写在computed
+            computed: {
+                // 计算属性不能和方法名和data中属性名重名
+                reverseStr() {
+                    console.log('执行计算属性');
+                    // 计算属性必须有返回值
+                    return this.name.split('').reverse().join('')
+                },
+                gMoney() {
+                    // 公积金扣款
+                    return this.money * 0.12
+                },
+                yMoney() {
+                    // 养老保险扣款
+                    return this.money * 0.08
+                },
+                dMoney() {
+                    // 医疗保险
+                    return this.money * 0.02
+                },
+                sMoney() {
+                    // 个人所得税
+                    return (this.money - this.gMoney - this.yMoney - this.dMoney) * 0.02
+                },
+                rMoney() {
+                    return this.money - this.gMoney - this.gMoney - this.dMoney - this.sMoney
+                }
+            }
         });
+
+        // methods方法和计算属性
+        // 1.方法必须写()  计算属性不需要
+        // 2.计算属性有缓存机制，所以多次执行相同时会从缓存中读取,不会重复执行
+
+        // 应用：当需要在页面展示过于复杂的计算结果的时候，可以考虑封装计算属性
     </script>
 </body>
 
