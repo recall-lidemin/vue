@@ -35,10 +35,9 @@
         <div class="form-group">
             <div class="form-inline">
                 <div class="form-group">
-                    <input v-model="msg" @change="query(msg)" type="text" class="form-control" id="exampleInputEmail2"
+                    <input v-model="search" type="text" class="form-control" id="exampleInputEmail2"
                         placeholder="请输入检索内容">
                 </div>
-
             </div>
         </div>
         <table class="table">
@@ -51,7 +50,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for='(item,i) in list' :key='i'>
+                <tr v-for='(item,i) in filterList' :key='i'>
                     <th scope="row">{{ i+1 }}</th>
                     <td>{{ item.name }}</td>
                     <td>{{ item.date | dateFormat }}</td>
@@ -73,18 +72,17 @@
             data: {
                 list: [{
                     name: '阿里',
-                    date: new Date()
+                    date: Date.now()
                 }, {
                     name: '腾讯',
-                    date: new Date()
+                    date: Date.now()
                 }, {
                     name: '字节跳动',
-                    date: new Date()
+                    date: Date.now()
                 }],
                 name: '',
-                msg: ''
+                search: ''
             },
-
             methods: {
                 add() {
                     let item = {
@@ -99,20 +97,30 @@
                         this.list = this.list.filter((item, index) => index !== i)
                     }
                 },
-                query(msg) {
-                    this.list = this.list.filter(item => item.name === msg)
-                }
             },
+            // 添加过滤器，处理日期格式
             filters: {
                 dateFormat(value) {
                     return moment(value).format("YYYY-MM-DD HH:mm:ss")
                 }
             },
+            // 自定义指令 ，打开页面自动聚焦
             directives: {
                 focus: {
                     inserted(dom) {
                         dom.focus()
                     }
+                }
+            },
+            // 定义计算属性
+            computed: {
+                // 通过当前输入的搜索内容和列表内容，筛选出要的结果
+                filterList() {
+                    this.list //数组
+                    this.search //搜索关键字
+                    // 实现检索，在数组中检索关键字
+                    // includes 是否包含给定字符串，返回布尔
+                    return this.list.filter(item => item.name.includes(this.search))
                 }
             }
         });
