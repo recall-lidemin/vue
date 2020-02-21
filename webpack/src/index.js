@@ -7,6 +7,7 @@
 //  ES6导入模块的方式：import *** from ***
 // 存在浏览器兼容问题，浏览器不支持
 import $ from 'jquery'
+import './css/index.css'
 
 $(function () {
     $('li:odd').css('backgroundColor', 'green')
