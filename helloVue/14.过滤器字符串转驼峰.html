@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{ str | toUpper }}</p>
+    </div>
+
+    <script>
+        // 全局过滤器
+        Vue.filter('toUpper1', (value) => {
+            return value.split("-").map(item => {
+                return item = item.charAt(0).toUpperCase() + item.substr(1)
+            }).join("")
+        })
+
+
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                str: 'abc-def-gh'
+            },
+            methods: {},
+            // 局部过滤器
+            filters: {
+                toUpper(value) {
+                    return value.split("-").map(item => {
+                        return item = item.charAt(0).toUpperCase() + item.substr(1)
+                    }).join("")
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

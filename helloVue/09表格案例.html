@@ -13,11 +13,34 @@
             width: 980px;
             margin: 0 auto;
         }
+
+        .info {
+            width: 100%;
+        }
     </style>
 </head>
 
 <body>
     <div id="app" class="app table-responsive">
+        <div class="form-group">
+            <label for="exampleInputName2">公司</label>
+            <div class="form-inline">
+                <div class="form-group">
+                    <input v-model.trim='name' type="text" class="form-control" id="exampleInputName2"
+                        placeholder="请输入公司">
+                    <button @click='add' type="button" class="btn btn-info">添加</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input v-model="msg" @input="query(msg)" type="text" class="form-control" id="exampleInputEmail2"
+                        placeholder="请输入检索内容">
+                </div>
+
+            </div>
+        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -28,15 +51,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for='(item,index) in list' :key='index'>
-                    <th scope="row">{{index+1}}</th>
+                <tr v-for='(item,i) in list' :key='i'>
+                    <th scope="row">{{i+1}}</th>
                     <td>{{item.name}}</td>
                     <td>{{item.date}}</td>
                     <td>
-                        <a href="#" @click.prevent>删除</a>
+                        <a href="#" @click.prevent='del(i)'>删除</a>
                     </td>
                 </tr>
-
+                <tr v-if='!list.length'>
+                    <td colspan="4" style="color:#999">没有任何数据</td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -47,16 +72,41 @@
             data: {
                 list: [{
                     name: '阿里',
-                    date: Date.now().toLocaleString()
+                    date: new Date()
                 }, {
                     name: '腾讯',
-                    date: Date.now().toLocaleString()
+                    date: new Date()
                 }, {
                     name: '字节跳动',
-                    date: Date.now().toLocaleString()
-                }]
+                    date: new Date()
+                }],
+                name: '',
+                msg: ''
             },
-            methods: {}
+
+            methods: {
+                add() {
+                    let item = {
+                        name: this.name,
+                        date: new Date()
+                    }
+                    this.list.unshift(item)
+                    this.name = ''
+                },
+                del(i) {
+                    if (confirm('确认删除该条信息吗？')) {
+                        this.list = this.list.filter((item, index) => index !== i)
+                    }
+                },
+                query(msg) {
+                    console.log(msg);
+                    if (msg !== '') {
+                        this.list = this.list.filter(item => item.name === msg)
+                        return
+                    }
+                    this.list = this.list
+                }
+            }
         });
     </script>
 </body>

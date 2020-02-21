@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <h1>Vue实例1</h1>
+    <div id="app">
+        <h4>全局过滤器</h4>
+        <p>{{name | changeName}}</p>
+        <input type="text" v-model='name'>
+        <h4>局部过滤器(注册在实例1)</h4>
+        <p>{{name | changeName2}}</p>
+        <input type="text" v-model='name'>
+    </div>
+    <h1>Vue实例2</h1>
+    <div id="app1">
+        <h4>全局过滤器</h4>
+        <p>{{name | changeName}}</p>
+        <input type="text" v-model='name'>
+        <h4>局部过滤器(注册在实例1)</h4>
+        <p>{{name | changeName2}}</p>
+        <input type="text" v-model='name'>
+    </div>
+
+    <script>
+        // 过滤器中this不指向Vue实例
+
+        // 1.全局过滤器 可以被所有的Vue实例应用
+        //   全局过滤器应该在Vue实例化之前注册 
+        //   全局注册语法：Vue.filter(过滤器名称,function(){})
+        //   不会改变原始数据,过滤器函数必须有返回值
+        Vue.filter("changeName", (value) => {
+            // 过滤器函数
+            return value.split('').map((item, index) => {
+                if (index === 1) {
+                    return "泽"
+                }
+                return item
+            }).join("")
+        })
+
+        // 2.局部过滤器 只能在注册的实例上应用
+        //    filters: { 对象 }
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                name: '李德民'
+            },
+            methods: {},
+            // 注册局部过滤器
+            filters: {
+                // 对象 value代表 管道前面的表达式传递的值
+                changeName2(value) {
+                    // 过滤器函数
+                    return value.split('').map((item, index) => {
+                        if (index === 2) {
+                            return "战"
+                        }
+                        return item
+                    }).join("")
+                }
+            }
+        });
+        let vm1 = new Vue({
+            el: '#app1',
+            data: {
+                name: '孙悟空'
+            }
+        })
+        let vm2 = new Vue()
+    </script>
+</body>
+
+</html>
