@@ -11,7 +11,10 @@
 
 <body>
     <div id="app">
-        <p>{{ str | toUpper }}</p>
+        <!-- 串联处理过程：
+            str先传给toUpper，toUpper处理完成后的结果再传给reverseStr处理,以此类推，最后返回 -->
+        <p>{{ str | toUpper | reverseStr}}</p>
+
     </div>
 
     <script>
@@ -26,7 +29,8 @@
         let vm = new Vue({
             el: '#app',
             data: {
-                str: 'abc-def-gh'
+                str: 'abc-def-gh',
+
             },
             methods: {},
             // 局部过滤器
@@ -35,6 +39,9 @@
                     return value.split("-").map(item => {
                         return item = item.charAt(0).toUpperCase() + item.substr(1)
                     }).join("")
+                },
+                reverseStr(value) {
+                    return value.split("").reverse().join("")
                 }
             }
         });

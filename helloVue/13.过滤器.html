@@ -38,12 +38,15 @@
         //   不会改变原始数据,过滤器函数必须有返回值
         Vue.filter("changeName", (value) => {
             // 过滤器函数
-            return value.split('').map((item, index) => {
-                if (index === 1) {
-                    return "泽"
-                }
-                return item
-            }).join("")
+            return value
+                .split('')
+                .map((item, index) => {
+                    if (index === 1) {
+                        return "泽"
+                    }
+                    return item
+                })
+                .join("")
         })
 
         // 2.局部过滤器 只能在注册的实例上应用
@@ -75,6 +78,13 @@
             }
         })
         let vm2 = new Vue()
+
+        // 3.过滤器可以串联和参数传递
+        // 过滤器串联(通过管道间隔)：{{ msg | 过滤器1 | 过滤器2 }}
+        // 过滤器2的值实际是过滤器1处理完的结果
+        // 过滤器第一个参数永远是前面传过来的过滤值
+        // 第二个参数开始就是传递的过滤器函数
+        // {{ msg | 过滤器名称(过滤值,[过滤器函数1,[过滤器函数2],...]) }}
     </script>
 </body>
 

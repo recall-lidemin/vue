@@ -35,7 +35,7 @@
         <div class="form-group">
             <div class="form-inline">
                 <div class="form-group">
-                    <input v-model="msg" @input="query(msg)" type="text" class="form-control" id="exampleInputEmail2"
+                    <input v-model="msg" @change="query(msg)" type="text" class="form-control" id="exampleInputEmail2"
                         placeholder="请输入检索内容">
                 </div>
 
@@ -99,12 +99,7 @@
                     }
                 },
                 query(msg) {
-                    console.log(msg);
-                    if (msg !== '') {
-                        this.list = this.list.filter(item => item.name === msg)
-                        return
-                    }
-                    this.list = this.list
+                    this.list = this.list.filter(item => item.name === msg)
                 }
             }
         });
