@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <myconf></myconf>
+        <hr>
+        <increment></increment>
+        <hr>
+        <increment></increment>
+        <hr>
+        <increment></increment>
+    </div>
+    <!-- 通过外部 template标签定义模板 -->
+    <template id="add">
+        <div>
+            <input type="button" value="自增" @click='increase'>
+            <p>{{ count }}</p>
+        </div>
+    </template>
+
+    <script>
+        Vue.component('myconf', {
+            template: "<h4>这是全局组件-----{{msg}}</h4>",
+            // 组件可以有自己的data,实例的data可以是一个对象
+            // 组件的data必须是一个方法,并且这个方法内部必须返回一个对象
+            data() {
+                return {
+                    msg: '这是组件中定义的data数据'
+                }
+            }
+        })
+        // 定义一个自增组件
+        Vue.component('increment', {
+            // 引用外部template模板
+            template: '#add',
+            data() {
+                return {
+                    count: 0
+                }
+            },
+            methods: {
+                increase() {
+                    this.count++
+                }
+            }
+        })
+
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
