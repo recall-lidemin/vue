@@ -20,5 +20,15 @@ module.exports = {
                 callback(null, data)
             }
         })
+    },
+    del(id, callback) {
+        let sqlStr = `delete from comment where id=${id}`
+        sql.sqlBuff(sqlStr, (err, data) => {
+            if (err) {
+                callback(err)
+            } else {
+                callback(null, data)
+            }
+        })
     }
 }

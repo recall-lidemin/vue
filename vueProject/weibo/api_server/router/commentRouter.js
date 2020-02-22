@@ -16,6 +16,7 @@ router.use((req, res, next) => {
 router.get('/get', (req, res) => {
     comment.get((err, data) => {
         if (err) {
+            console.log(err);
             return res.send({
                 code: 400,
                 msg: '获取数据失败'
@@ -26,8 +27,15 @@ router.get('/get', (req, res) => {
 })
 
 router.post('/add', (req, res) => {
+    if (req.body.content === '') {
+        return res.send({
+            code: 400,
+            msg: '内容不能为空'
+        })
+    }
     comment.add(req.body, (err, data) => {
         if (err) {
+            console.log(err);
             return res.send({
                 code: 400,
                 msg: '插入失败'
@@ -37,13 +45,24 @@ router.post('/add', (req, res) => {
             code: 200,
             msg: '插入成功'
         })
-
     })
 
 })
 
-router.delete('/del', (req, res) => {
-
+router.get('/del', (req, res) => {
+    comment.del(req.query.id, (err, data) => {
+        if (err) {
+            console.log(err);
+            return res.send({
+                code: 400,
+                msg: '删除失败'
+            })
+        }
+        res.send({
+            code: 200,
+            msg: '删除成功'
+        })
+    })
 })
 
 module.exports = router
