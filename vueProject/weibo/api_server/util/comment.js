@@ -30,5 +30,15 @@ module.exports = {
                 callback(null, data)
             }
         })
+    },
+    query(id, callback) {
+        let sqlStr = `select * from comment where id=${id}`
+        sql.sqlBuff(sqlStr, (err, data) => {
+            if (err) {
+                callback(err)
+            } else {
+                callback(null, data)
+            }
+        })
     }
 }

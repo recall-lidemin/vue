@@ -19,20 +19,26 @@
             console.log(res);
         })
     }
-    $.post('http://127.0.0.1:8080/add', {
-        id: 1234567,
-        content: "我是前端的请求",
-        date: "2017-12-11"
-    }).then(res => {
-        console.log(res);
-        getAndShow()
-    })
+    // $.post('http://127.0.0.1:8080/add', {
+    //     id: 110,
+    //     content: "我是前端的请求",
+    //     date: "2017-12-11"
+    // }).then(res => {
+    //     console.log(res);
+    //     getAndShow()
+    // })
 
     $.get('http://127.0.0.1:8080/del', {
-        id: 1
+        id: 123456
     }).then(res => {
         console.log(res);
     })
+
+    // $.get('http://127.0.0.1:8080/query', {
+    //     id: 2222
+    // }).then(res => {
+    //     console.log(res);
+    // })
 </script>
 
 </html>

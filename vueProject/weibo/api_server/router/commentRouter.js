@@ -3,15 +3,11 @@ const bodyParser = require('body-parser')
 const comment = require('../util/comment')
 
 const router = express.Router()
+
 // 配置处理post请求传值
 router.use(bodyParser.urlencoded({
     extended: false
 }))
-// 配置中间件，集中处理CORS跨域设置请求头
-router.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    next()
-})
 
 router.get('/get', (req, res) => {
     comment.get((err, data) => {
@@ -27,12 +23,26 @@ router.get('/get', (req, res) => {
 })
 
 router.post('/add', (req, res) => {
+
     if (req.body.content === '') {
         return res.send({
             code: 400,
             msg: '内容不能为空'
         })
     }
+
+    comment.query(req.body.id, (err, data) => {
+        if (err) {
+            console.log(err)
+        }
+        if (data.length !== 0) {
+            return res.send({
+                code: 400,
+                msg: 'ID已存在,不允许重复添加'
+            })
+        }
+    })
+
     comment.add(req.body, (err, data) => {
         if (err) {
             console.log(err);
@@ -50,18 +60,39 @@ router.post('/add', (req, res) => {
 })
 
 router.get('/del', (req, res) => {
-    comment.del(req.query.id, (err, data) => {
+
+    comment.query(req.query.id, (err, data) => {
         if (err) {
-            console.log(err);
             return res.send({
                 code: 400,
-                msg: '删除失败'
+                msg: '查询出错'
             })
         }
-        res.send({
-            code: 200,
-            msg: '删除成功'
+        if (data.length === 0) {
+            return res.send({
+                code: 400,
+                msg: 'ID不存在,无法删除'
+            })
+        }
+        comment.del(req.query.id, (err, data) => {
+            if (err) {
+                console.log(err);
+                return res.send({
+                    code: 400,
+                    msg: '删除失败'
+                })
+            }
+            res.send({
+                code: 200,
+                msg: '删除成功'
+            })
         })
+    })
+})
+
+router.get('/query', (req, res) => {
+    comment.query(req.query.id, (err, data) => {
+        console.log(data);
     })
 })
 
