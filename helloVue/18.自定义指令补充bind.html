@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 此处必须在 " "内用  '' ,不然Vue会认为他是变量,会去data中找,找不到会报错 -->
+        <input type="text" v-color="'green'" v-font="'30px'">
+    </div>
+
+    <script>
+        // 定义全局自定义指令 v-color 控制样式颜色
+        Vue.directive('color', {
+            // 元素一解析就会执行,一般样式定义写在此处
+            bind(dom, binding) {
+                // 表达式的表达式
+                dom.style.color = binding.value
+                // 传入的原始字符串
+                // dom.style.color = binding.expression
+            },
+            // 元素插入到DOM才会执行,一般方法会写在此处,行为只有DOM加载了才会触发
+            inserted(dom, option) {
+
+            },
+            // 元素发生更新才会执行
+            update(dom, option) {
+
+            }
+        })
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            directives: {
+                // 简写形式,包含了bind和update两个函数,
+                //如果不考虑 inserted的时候可以这么简写
+                font: function (dom, binding) {
+                    dom.style.fontSize = parseInt(binding.value) + 'px'
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
