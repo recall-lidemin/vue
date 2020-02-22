@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+body ul {
+  margin: 0;
+  padding: 0;
+}
+body .box {
+  width: 200px;
+  height: 200px;
+  background-color: pink;
+  background: url('../images/timg.jpg') no-repeat;
+  background-size: contain;
+}
