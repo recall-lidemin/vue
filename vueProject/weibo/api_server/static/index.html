@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery.min.js"></script>
+</head>
+
+<body>
+    你好
+</body>
+<script>
+    getAndShow()
+
+    function getAndShow() {
+        $.get('http://127.0.0.1:8080/get').then(res => {
+            console.log(res);
+        })
+    }
+    $.post('http://127.0.0.1:8080/add', {
+        id: 123456,
+        content: "我是前端的请求",
+        date: "2017-12-11"
+    }).then(res => {
+        console.log(res);
+        getAndShow()
+    })
+</script>
+
+</html>
