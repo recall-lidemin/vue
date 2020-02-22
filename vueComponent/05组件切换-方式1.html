@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 组件使用 v-if 实现组件切换,但是只能切换两个,三个或者以上就不行了-->
+        <a href="#" @click.prevent='flag=true'>登陆</a>
+        <a href="#" @click.prevent='flag=false'>注册</a>
+        <login v-if='flag'></login>
+        <reg v-else></reg>
+    </div>
+
+    <script>
+        Vue.component('login', {
+            template: '<h4>这是登陆组件</h4>'
+        })
+
+        Vue.component('reg', {
+            template: '<h4>这是注册组件</h4>'
+        })
+
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                flag: true
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

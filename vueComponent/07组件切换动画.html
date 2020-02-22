@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(100px);
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 1s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+
+        <a href="#" @click.prevent="comName='login'">登陆</a>
+        <a href="#" @click.prevent="comName='reg'">注册</a>
+
+        <!-- 组件切换动画,直接包裹在transition中即可
+            通过 mode 定义过渡方式
+        -->
+        <transition mode='out-in'>
+            <component :is="comName"></component>
+        </transition>
+    </div>
+
+    <script>
+        Vue.component('login', {
+            template: '<h4>这是登陆组件</h4>'
+        })
+
+        Vue.component('reg', {
+            template: '<h4>这是注册组件</h4>'
+        })
+
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                comName: 'login'
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 父组件向子组件传递方法,使用的是事件机制 -->
+        <conf :parent='msg' @func='show'></conf>
+        <p>我是子组件传递过来的值:{{ son }}</p>
+    </div>
+
+
+    <template id="temp">
+        <div>
+            <h4>我是子组件---------{{ parent }}</h4>
+            <input type="button" value="子组件按钮点击触发父组件方法func" @click='myclick'>
+        </div>
+    </template>
+
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '我是传递过来的父组件的值',
+                son: null
+            },
+            methods: {
+                show(data) {
+                    console.log('调用了父组件的show方法' + '-----' + data);
+                    this.son = data
+                }
+            },
+            components: {
+                // 子组件,默认是无法访问到父组件的data和methods的
+                conf: {
+                    template: '#temp',
+                    // 注意:组件中所有props的数据,都是通过父组件传递给子组件的
+                    // props中数据只读
+                    props: ['parent'], //想使用父组件传过来的值,需要先在props中定义一下
+                    // data中的数据不是通过父组件传递过来的,都是自己私有的
+                    // data中的数据可读可写
+                    data() {
+                        return {
+                            son: {
+                                name: 'son',
+                                age: 1
+                            }
+                        }
+                    },
+                    methods: {
+                        myclick() {
+                            // 使用 this.$emit('方法名',参数列表逗号分隔) 调用父组件中的方法,并向父组件传参
+                            // 第一个参数是传递过来的方法名
+                            // 从第二个参数开始,就是传参
+                            // 这里也实现了通过方法向父组件传值:本质上是父组件先传一个方法进来,子组件调用的时候,顺便传值进去
+                            this.$emit('func', this.son)
+                        }
+                    },
+                    filters: {},
+                    directives: {},
+                    computed: {},
+                    components: {}
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
