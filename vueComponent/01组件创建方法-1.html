@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <my-h4></my-h4>
+    </div>
+
+    <script>
+        // 1.组件的创建
+        // 1.1使用Vue.extend来创建全局Vue组件模板对象
+        const conf1 = Vue.extend({
+            // template属性指定了组件要展示的html结构
+            template: '<h4>这是使用Vue.extend 创建的组件</h4>'
+        })
+
+        // 1.2.使用 Vue.component('组件名称',创建出来的组件模板对象) 
+        // 注意:如果组件名称使用驼峰命名,组件在使用时两个单词之间加 - ,并大写变成小写  myH4=>my-h4
+        //      如果没有使用驼峰,可以直接写名字 myh4=>myh4
+        Vue.component('myH4', conf1)
+
+        // 1.3然后页面就可以直接使用组件了 <my-h4></my-h4>
+
+        // 2.将1中的步骤合成一步
+        // Vue.component('组件名称',Vue.extend({ template:'html结构' })) 
+        Vue.component('myH4', Vue.extend({
+            // template属性指定了组件要展示的html结构
+            template: '<h4>这是使用Vue.extend 创建的组件</h4>'
+        }))
+
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

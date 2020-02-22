@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <my-h4></my-h4>
+    </div>
+
+    <script>
+        // component(,)第二个参数可以直接写组件对象
+        // 组件必须只有一个唯一的根元素
+        Vue.component('myH4', {
+            template: '<div><h4>这是使用component方法2创建的组件</h4><span>123</span></div>'
+        })
+
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

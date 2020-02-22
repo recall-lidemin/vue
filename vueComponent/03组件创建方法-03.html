@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <myh4></myh4>
+    </div>
+
+    <template id="temp">
+        <div>
+            <h4>这是通过template元素,在外面定义的组件结构</h4>
+            <span>非常好!</span>
+        </div>
+    </template>
+    <script>
+        Vue.component('myh4', {
+            template: '#temp'
+        })
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>
