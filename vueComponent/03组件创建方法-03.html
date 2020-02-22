@@ -12,6 +12,12 @@
 <body>
     <div id="app">
         <myh4></myh4>
+        <login></login>
+    </div>
+
+    <div id="app1">
+        <myh4></myh4>
+        <login></login>
     </div>
 
     <template id="temp">
@@ -28,6 +34,18 @@
             el: '#app',
             data: {},
             methods: {}
+        });
+
+        let vm2 = new Vue({
+            el: '#app1',
+            data: {},
+            methods: {},
+            components: {
+                // 定义实例内部私有组件 组件名:{组件模板对象}
+                login: {
+                    template: '<h1>这是vm2私有的组件</h1>'
+                }
+            }
         });
     </script>
 </body>
