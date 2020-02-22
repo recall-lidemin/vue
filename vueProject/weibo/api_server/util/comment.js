@@ -5,19 +5,20 @@ module.exports = {
         let sqlStr = 'select * from comment'
         sql.sqlBuff(sqlStr, (err, data) => {
             if (err) {
-                return callback(err)
+                callback(err)
+            } else {
+                callback(null, data)
             }
-            callback(null, data)
         })
-
     },
     add(contents, callback) {
         let sqlStr = `insert into comment values(${contents.id},'${contents.content}','${contents.date}')`
         sql.sqlBuff(sqlStr, (err, data) => {
             if (err) {
-                return callback(err)
+                callback(err)
+            } else {
+                callback(null, data)
             }
-            callback(null, data)
         })
     }
 }

@@ -6,30 +6,30 @@
  *  */
 const mysql = require('mysql')
 
-const sqlBuff = (sql, callback) => {
-    const connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '12345123',
-        database: 'mydatabase'
-    })
-    connection.connect()
-    connection.query(sql, (err, data) => {
-        if (err) throw err
-        callback(null, data)
-    })
-}
-let cont = {
-    id: 222,
-    content: "我是测试数据",
-    date: "2018-12-12"
-}
-// console.log(cont.content);
+const pool = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: '12345123',
+    database: 'mydatabase',
+    port: 3306
+});
 
-// let sqlStr = `insert into comment values(${cont.id},'${cont.content}','${cont.date}')`
-// sqlBuff(sqlStr, (err, data) => {
-//     console.log(data);
-// })
+const sqlBuff = (sql, callback) => {
+    pool.getConnection((err, conn) => {
+        if (err) {
+            callback(err, null, null);
+        } else {
+            conn.query(sql, (qerr, vals, fields) => {
+                //释放连接
+                conn.release();
+                //事件驱动回调
+                callback(qerr, vals, fields);
+            });
+        }
+    });
+}
+
+
 module.exports = {
     sqlBuff
 }
