@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .ball {
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="加入购物车" @click='flag=!flag'>
+        <!-- 
+        <transition 
+        v-on:before-enter='beforeEnter' 
+        v-on:enter='enter' 
+        v-on:after-enter='afterEnter'
+
+        v-on:before-leave='beforeLeave' 
+        v-on:leave='leave' 
+        v-on:after-leave='afterLeave'
+        >
+            
+        </transition> 
+        -->
+        <transition @before-enter='beforeEnter' @enter='enter' @after-enter='afterEnter'>
+            <div class="ball" v-if='flag'></div>
+        </transition>
+    </div>
+
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                flag: false
+            },
+            methods: {
+                // 动画钩子函数的第一个参数:dom,是个原生的js DOM对象
+                beforeEnter(dom) {
+                    // 表示动画入场之前,此时,动画尚未执行,可以在 beforeEnter设置元素开始动画之前的起始样式
+                    dom.style.transform = "translate(0,0)"
+
+                },
+                enter(dom, done) {
+                    // 没有实际作用,但是不写没有动画行为
+                    // 可以理解为强制刷新动画行为
+                    dom.offsetWidth
+                    // enter表示动画开始之后的样式,这里可以设置动画完成之后的状态
+                    dom.style.transform = "translate(150px,450px)"
+                    dom.style.transition = "all 1s ease"
+
+                    done()
+                },
+                afterEnter(dom) {
+                    // 动画完成之后会执行 afterEnter
+                    this.flag = !this.flag
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

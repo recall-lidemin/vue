@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{msg}}</p>
+        <input type="button" @click="msg='No'" value="改变P内容">
+    </div>
+
+    <script>
+        // Vue实例生命周期
+        // 1. new Vue() 开始创建Vue实例
+        // 2.Init(Events&Lifecycle) 表示刚初始化了一个Vue空实例
+        // 这个时候,Vue实例对象上只有一些默认的生命周期函数和默认的事件,其他东西都未创建
+
+        // 3.执行 beforeCreate 函数
+
+        // 4.Init(injections&reactivity)
+        // 5.
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '初始化'
+            },
+            methods: {
+                show() {
+                    console.log('执行了show');
+                }
+            },
+            // 创建阶段的生命周期函数
+            beforeCreate() {
+                // 在beforeCreate执行的时候,data和methods都没有初始化
+                console.log(this.msg) //undefined
+                this.show() //this.show is not a function"
+            },
+            created() {
+                // 在created中,data和methods已经初始化,如果要操作数据,调用方法
+                // 最早也要在created中,之前都还未初始化
+                console.log(this.msg) //初始化
+                this.show() //执行了show
+            },
+            beforeMount() {
+                // 表示模板已经在内存编译完成,但模板没有渲染到页面中
+                // 挂载到页面前,此时内存是最新的,但还尚未挂载到页面
+                console.log(document.querySelector('p').innerText) // {{msg}}
+
+            },
+            mounted() {
+                // 模板已经挂载到页面,页面已经渲染好了
+                // 是实例创建期间的最后一个生命周期函数
+                // 此时没有其他操作,该实例就创建完成了,创建阶段完成,进入运行阶段
+                // 所以如果要操作DOM节点,最早在 mounted() 中执行
+                console.log(document.querySelector('p').innerText) //输出: '初始化'
+            },
+
+            // 运行阶段的生命周期函数,执行0次或无数次
+            beforeUpdate() {
+                // 此时数据已经被更新了,但是页面还没有更新
+                console.log('界面元素内容:' + document.querySelector('p').innerText) //输出: '初始化'
+                console.log('data中数据是:' + this.msg) //输出: 'No'
+            },
+            updated() {
+                // updated执行时,页面内容数据和data数据已经同步了
+                console.log('界面元素内容:' + document.querySelector('p').innerText) //输出: 'No'
+                console.log('data中数据是:' + this.msg) //输出: 'No'
+            },
+            // 销毁阶段
+            beforeDestroy() {
+                // 执行时,实例从运行阶段进入销毁阶段,此时Vue身上的data和methods,filters等等都还可用
+
+            },
+            destroyed() {
+                // 已销毁,全部数据方法等都不可用了
+            }
+        });
+    </script>
+</body>
+
+</html>
