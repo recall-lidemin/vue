@@ -47,17 +47,17 @@
         Name:
         <input type="text" v-model='name'>
         <input type="button" value="添加" @click='add'>
-        <ul>
-            <!-- 列表动画使用 transition-group -->
-            <!-- 给 transition-group加上 appear 会实现入场效果-->
-            <!-- 如果要使用 v-for 为每一个元素创建动画,需要指定 :key 属性-->
 
-            <transition-group appear>
-                <li v-for="(item,index) in list" :key='item.id' @click='del(index)'>
-                    <span>{{item.id}}</span><span>{{ item.name }}</span>
-                </li>
-            </transition-group>
-        </ul>
+        <!-- 列表动画使用 transition-group -->
+        <!-- 如果要使用 v-for 为每一个元素创建动画,需要指定 :key 属性-->
+        <!-- 给 transition-group加上 appear 会实现入场效果-->
+        <!-- 通过 tag 指定将来transition-group渲染为什么标签,不指定的话,默认渲染成span -->
+        <transition-group appear tag='ul'>
+            <li v-for="(item,index) in list" :key='item.id' @click='del(index)'>
+                <span>{{item.id}}</span><span>{{ item.name }}</span>
+            </li>
+        </transition-group>
+
     </div>
 
     <script>
