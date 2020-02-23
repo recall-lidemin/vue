@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // 实例化Promise之后，里面的函数会立即执行
+    // 两个参数：
+    // resolve是成功执行该异步操作的函数，得到的结果
+    // reject 是执行该异步失败返回的错误信息
+    // 链式调用 .then
+    // 如果操作中存在异步，必须写Promise，如果不存在异步操作，可以直接return
+    // .then必须return，不然后面的链得不到结果
+    // 如果在链上的同步操作出现了问题，可以使用Promise的静态方法project，直接 return Promise.reject(err)
+
+    let p1 = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            let res = 100 + 200
+            resolve(res) //执行成功返回结果
+
+        }, 2000)
+
+    }).then(data => {
+        // 拿到上次的执行结果
+        console.log(data);
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                let res = data + 200 //第二次执行，对第一次结果操作
+                resolve(res) //第二次执行成功
+                //reject('第二次失败了')
+            }, 2000)
+        })
+
+    }).then(data => {
+        //拿到第二次执行成功结果
+        return Promise.reject('第三次同步操作出错了')
+
+    }).catch(err => {
+        // catch捕获错误，应该写在执行链的最后
+        console.log(err)
+    })
+</script>
+
+</html>
