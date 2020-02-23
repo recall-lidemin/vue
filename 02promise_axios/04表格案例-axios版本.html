@@ -50,7 +50,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for='(item,i) in filterList' :key='i'>
+                <tr v-for='(item,i) in list' :key='i'>
                     <th scope="row">{{ i+1 }}</th>
                     <td>{{ item.name }}</td>
                     <td>{{ item.date | dateFormat }}</td>
@@ -75,6 +75,19 @@
                 name: '',
                 search: ''
             },
+            // 监听数据的变化，监听谁就在里面写谁，提供一个函数，
+            //函数的两个参数是： newValue(新的值)，oldValue(旧的值)
+            watch: {
+                // 这里不能用箭头函数，否则会改变this指向，变成window
+                search: function (newValue, oldValue) {
+                    // 这里的this指向Vue实例
+                    axios.get(`http://localhost:3000/company?name_like=${newValue}`)
+                        .then(res => {
+                            // 使用箭头函数，指向外部Vue实例
+                            this.list = res.data
+                        })
+                }
+            },
             methods: {
                 getAndShow() {
                     axios.get('http://localhost:3000/company')
@@ -86,11 +99,16 @@
                     if (this.name === '') {
                         return alert('不能为空')
                     }
-                    let item = {
-                        name: this.name,
-                        date: new Date()
-                    }
-                    this.list.unshift(item)
+
+                    // this.list.unshift(item)
+                    axios.post('http://localhost:3000/company', {
+                            name: this.name,
+                            date: new Date()
+                        })
+                        .then(res => {
+                            this.getAndShow()
+                        })
+
                     this.name = ''
                 },
                 del(id) {
