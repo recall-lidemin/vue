@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button @click='test'>按钮</button>
+        <img :src="item" v-for="(item,index) in list" :key='index'>
+    </div>
+
+    <script>
+        // 500ms后生成一个随机数,
+        // 将随机数乘10,直接返回
+        // 根据第二步结果,生成对应长度数组
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                list: []
+            },
+            methods: {
+                test() {
+                    new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                            resolve(Math.random())
+                        }, 500)
+                    }).then(data => {
+                        return Math.ceil(data * 10)
+                    }).then(data => {
+                        this.list = Array.from(Array(data)).map(item => item =
+                            'https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2744836006,4027311643&fm=26&gp=0.jpg'
+                        )
+                    })
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

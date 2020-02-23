@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .app {
+            width: 980px;
+            margin: 0 auto;
+        }
+
+        .info {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app table-responsive">
+        <div class="form-group">
+            <label for="exampleInputName2">公司</label>
+            <div class="form-inline">
+                <div class="form-group">
+                    <input v-model.trim='name' type="text" class="form-control" id="exampleInputName2"
+                        placeholder="请输入公司" v-focus>
+                    <button @click='add' type="button" class="btn btn-info">添加</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input v-model="search" type="text" class="form-control" id="exampleInputEmail2"
+                        placeholder="请输入检索内容">
+                </div>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>公司</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for='(item,i) in filterList' :key='i'>
+                    <th scope="row">{{ i+1 }}</th>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.date | dateFormat }}</td>
+                    <td>
+                        <a href="#" @click.prevent='del(item.id)'>删除</a>
+                    </td>
+                </tr>
+                <tr v-if='!list.length'>
+                    <td colspan="4" style="color:#999">没有任何数据</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- 引入日期处理插件 -->
+    <script src="./moment.min.js"></script>
+    <script src="./axios.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: [],
+                name: '',
+                search: ''
+            },
+            methods: {
+                getAndShow() {
+                    axios.get('http://localhost:3000/company')
+                        .then(res => {
+                            this.list = res.data
+                        })
+                },
+                add() {
+                    if (this.name === '') {
+                        return alert('不能为空')
+                    }
+                    let item = {
+                        name: this.name,
+                        date: new Date()
+                    }
+                    this.list.unshift(item)
+                    this.name = ''
+                },
+                del(id) {
+                    if (confirm('确认删除该条信息吗？')) {
+                        // this.list = this.list.filter((item, index) => index !== i)
+                    }
+                    axios.delete(`http://localhost:3000/company/${id}`)
+                        .then(res => {
+                            this.getAndShow()
+                        })
+                },
+            },
+            created() {
+                this.getAndShow()
+            },
+            // 添加过滤器，处理日期格式
+            filters: {
+                dateFormat(value) {
+                    return moment(value).format("YYYY-MM-DD HH:mm:ss")
+                }
+            },
+            // 自定义指令 ，打开页面自动聚焦
+            directives: {
+                focus: {
+                    inserted(dom) {
+                        dom.focus()
+                    }
+                }
+            },
+            // 定义计算属性
+            computed: {
+                // 通过当前输入的搜索内容和列表内容，筛选出要的结果
+                filterList() {
+                    this.list //数组
+                    this.search //搜索关键字
+                    // 实现检索，在数组中检索关键字
+                    // includes 是否包含给定字符串，返回布尔
+                    return this.list.filter(item => item.name.includes(this.search))
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

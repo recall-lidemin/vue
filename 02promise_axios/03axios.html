@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="getAndShow()">获取</button>
+    <button onclick="del()">删除</button>
+    <button onclick="add()">新增</button>
+    <button onclick="update()">修改</button>
+</body>
+<script src="./axios.min.js"></script>
+<script>
+    function getAndShow() {
+        axios.get('http://localhost:3000/table')
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+    getAndShow()
+
+    function del(id) {
+        axios.delete('http://localhost:3000/table/2').then(res => {
+            console.log(res);
+        })
+    }
+
+    function add() {
+        axios.post('http://localhost:3000/table', {
+            name: '李德民'
+        }).then(res => {
+            console.log('成功添加');
+        })
+    }
+
+    function update() {
+        axios.put('http://localhost:3000/table/4', {
+            name: '宋小宝'
+        }).then(res => {
+            console.log('修改成功');
+
+        })
+    }
+</script>
+
+</html>
