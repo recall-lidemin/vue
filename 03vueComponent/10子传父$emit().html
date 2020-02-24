@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- 使用组件 -->
+    <div id="app">
+        <el-son @getparameter="showParameter"></el-son>
+    </div>
+
+    <script>
+        // 定义子组件
+        Vue.component('el-son', {
+            data: function () {
+                return {
+                    parameter: 1
+                }
+            },
+            methods: {
+                giveParameter: function () {
+                    //在组件绑定的方法giveParameter中触发$emit事件，并抛出参数
+                    //$emit 触发 getParameter 事件
+                    this.$emit('getparameter', this.parameter)
+                }
+            },
+            template: `
+                        <button @click="giveParameter">
+                        Click me for parameter
+                        </button>
+                      `
+        })
+
+        // 创建Vue实例
+        new Vue({
+            el: '#app',
+            methods: {
+                showParameter: function (parameter) {
+                    //方法的参数 parameter 用来接收 $emit 抛出的参数
+                    alert(parameter)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

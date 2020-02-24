@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .foods {
+            width: 1000px;
+            margin: 30px auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .list-item {
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin: 20px 0;
+
+        }
+
+        .list-item img {
+            width: 280px;
+            height: 200px;
+
+        }
+
+        .info {
+            height: 60px;
+            padding: 0 10px;
+            line-height: 60px;
+            font-size: 20px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        span,
+        img {
+            user-select: none;
+        }
+
+        .addcut {
+            position: absolute;
+            right: 10px;
+            bottom: 0;
+
+        }
+
+        .addcut-span {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 35px;
+            border-radius: 50%;
+            margin-right: 5px;
+            font-weight: bold;
+            font-size: 30px;
+            color: #fff;
+            background: rgb(0, 122, 204);
+            cursor: pointer;
+        }
+
+        .count {
+            min-width: 50px;
+            line-height: 50px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 组件的使用 -->
+    <div id="app">
+        <div class="foods">
+            <list-item v-for="(item,index) in list" @getitem="getitem" :item="item" :key="item.id"></list-item>
+        </div>
+    </div>
+
+    <script>
+        Vue.component('list-item', {
+            template: `
+            <div class="list-item">
+            <div class="img">
+                <img :src="item.img" alt="">
+            </div>
+            <div class="info">
+                <span class="title">{{item.title}}</span>
+                <add-cut :count='item.count' @getcount='getcount'></add-cut>
+            </div>
+            </div>`,
+            methods: {
+                getcount(count) {
+                    this.$emit('getitem', {
+                        ...this.item,
+                        count
+                    })
+                }
+            },
+            props: ['item'],
+            components: {
+                "add-cut": {
+                    template: `
+                    <div class="addcut">
+                         <span @click='cut' class="addcut-span" v-if="count">-</span>
+                         <span class="count" v-if="count">{{ count }}</span>
+                         <span @click='add' class="addcut-span">+</span>
+                    </div>`,
+                    props: ['count'],
+                    methods: {
+                        cut() {
+                            this.$emit('getcount', this.count - 1)
+                        },
+                        add() {
+                            this.$emit('getcount', this.count + 1)
+                        }
+                    }
+                }
+            }
+        })
+
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                list: [{
+                        id: 1,
+                        img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582385941145&di=c4ebf24db1509ebe93adca0c137c1938&imgtype=0&src=http%3A%2F%2Fimg.improve-yourmemory.com%2Fpic%2F72071791ca96de6e8983c1310190e0fa-2.jpg',
+                        title: '龙虾拌芥末',
+                        count: 0
+                    },
+                    {
+                        id: 2,
+                        img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582385941144&di=83385bf0b2c64ccde9981467098b2d52&imgtype=0&src=http%3A%2F%2Fattachments.gfan.com%2Fforum%2F201503%2F18%2F210259bqy79b8e7zfykqzk.jpg',
+                        title: '杭州烧麦',
+                        count: 0
+                    },
+                    {
+                        id: 3,
+                        img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582385941144&di=f29fcba50a3784a7dc8fbe182825f3fb&imgtype=0&src=http%3A%2F%2Fhuafans.dbankcloud.com%2Fpic%2F2015%2F07%2F22%2F3c9982588d15d72a027ac18876113b31_10857385%2C5120%2C2880.jpg%3Fmode%3Ddownload',
+                        title: '培根煎蛋',
+                        count: 0
+                    }
+                ]
+            },
+            methods: {
+                getitem(item) {
+                    this.list = this.list.map(foods => {
+                        if (item.id == foods.id) {
+                            return item
+                        }
+                        return foods
+                    })
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

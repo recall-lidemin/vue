@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        #app {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: start;
+        }
+
+        .produce-item {
+            margin: 0 20px;
+        }
+
+        .inner {
+            display: flex;
+            justify-content: flex-end;
+            padding: 0 25px;
+        }
+
+        .inner span {
+            margin: 0 10px;
+            font-size: 25px;
+        }
+
+        .inner span:first-child {
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 50%;
+            background-color: skyblue;
+            text-align: center;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .inner span:last-child {
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 50%;
+            background-color: skyblue;
+            text-align: center;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <el-goods v-for="item in 5"></el-goods>
+    </div>
+
+    <script>
+        Vue.component('el-goods', {
+            template: `
+            <div class="produce-item">
+            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/0099822e42b4428cb25c4cdebc6ca53d.jpg?thumb=1&w=200&h=200"
+            alt="">
+            <div class="inner">
+            <span @click="cut" v-show="count">-</span>
+            <span v-show="count">{{ count }}</span>
+            <span @click="add">+</span>
+            </div>
+            </div>  
+            `,
+            data() {
+                return {
+                    count: 0
+                }
+            },
+            methods: {
+                cut() {
+                    this.count--
+                },
+                add() {
+                    this.count++
+                }
+            }
+        })
+
+
+        let vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

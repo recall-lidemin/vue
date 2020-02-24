@@ -7,3 +7,9 @@
    `Vue.component('组件名称',conf)`
  - 2.`Vue.component('组件名称',Vue.extend({ template:'' }))` 
  - 3.`Vue.component('组件名称',{ template:'' })`
+
+## 组件
+ - 一切重复的结构数据逻辑都可以封装成一个组件
+ - 每一个组件实例都是独立的
+ - 组件就是一个特殊的Vue实例
+ - 组件中包含了：data(方法，返回一个对象)/methods/filters/directives/computed/components/生命周期函数
