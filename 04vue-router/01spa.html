@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .menu {
+            margin: 0 auto;
+            width: 800px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .menu a {
+            display: block;
+            height: 40px;
+            background-color: skyblue;
+            font-size: 20px;
+            padding: 0 20px;
+        }
+
+        .container {
+            width: 800px;
+            height: 600px;
+            border: 2px solid #ccc;
+            margin: 20px auto;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="menu">
+        <a href="#xy">西游记</a>
+        <a href="#sh">水浒</a>
+        <a href="#hl">红楼</a>
+        <a href="#sg">三国</a>
+    </div>
+    <!-- 容器，用来放置内容 -->
+    <div class="container">
+
+    </div>
+
+    <!-- 监听hash值得变化，根据hash值切换对应的模块 -->
+    <!-- 这样页面不会刷新重新请求 -->
+    <script>
+        // 监视hash值得变化
+        // hash变化事件
+        let dom = document.querySelector('.container')
+
+        function fun() {
+            let path = location.hash.substr(1)
+            switch (path) {
+                case 'xy':
+                    dom.style.backgroundImage =
+                        `url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582559920766&di=370caee101c1ea39127af6a6d093a37c&imgtype=0&src=http%3A%2F%2Fpics5.baidu.com%2Ffeed%2Fe1fe9925bc315c608fad94fc7bbceb15495477f9.jpeg%3Ftoken%3D6fdcc8fac1a4b16c12a052fcb37194a3%26s%3D162AEFA05483D1FF1A2430B003008090)`
+                    break;
+                case 'sh':
+                    dom.style.backgroundImage =
+                        `url(https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3145116149,2589026167&fm=26&gp=0.jpg)`
+                    break;
+                case 'hl':
+                    dom.style.backgroundImage =
+                        `url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582560077379&di=a9dff6d6b20a1a2fda12667f0ad55ec1&imgtype=0&src=http%3A%2F%2Fvsd-picture.cdn.bcebos.com%2Fc3153afa93df07f6f542424c502ff1c150e01078.jpg)`
+                    break;
+                case 'sg':
+                    dom.style.backgroundImage =
+                        `url(https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2226532735,2393101278&fm=11&gp=0.jpg)`
+                    break;
+            }
+
+        }
+        fun()
+        window.onhashchange = fun
+    </script>
+</body>
+
+</html>

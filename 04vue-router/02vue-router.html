@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 1.导入 vue-router -->
+    <script src="./vue-router.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 2.设置导航和容器 -->
+        <router-link to="/xf">邢菲1</router-link>
+        <router-link to="/">邢菲2</router-link>
+
+        <!-- 容器 -->
+        <router-view></router-view>
+    </div>
+
+    <script>
+        // 直接挂在路由上得组件，不需要注册，只需要定义对象即可
+        let wyz = {
+            template: `<img src="http://img2.imgtn.bdimg.com/it/u=1591503322,1964920624&fm=26&gp=0.jpg">`
+        }
+        let sxb = {
+            template: `<img src="https://dss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2103240093,3004965299&fm=26&gp=0.jpg">`
+        }
+        // 3.实例化router对象
+        //new Vuerouter()
+        // 4.配置路由规则表
+        const router = new VueRouter({
+            routes: [{
+                path: '/xf', //路由地址
+                component: wyz //组件
+            }, {
+                path: '/',
+                component: sxb
+            }]
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        });
+    </script>
+</body>
+
+</html>

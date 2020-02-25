@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/list">列表</router-link>
+        <router-view></router-view>
+    </div>
+
+    <script src="./vue-router.js"></script>
+    <script>
+        let list = {
+            template: `<div class="list">
+                <div>
+                <h4>动态路由跳转</h4>
+                <router-link :to="'/item/'+item" v-for="(item,index) in list" :key="index">{{ item }}</router-link>
+                </div>
+
+                <div>
+                <h4>查询参数跳转</h4>
+                <router-link :to="'/item/?name='+item" v-for="(item,index) in list" :key="index">{{ item }}</router-link>
+                </div>
+            </div>`,
+            data() {
+                return {
+                    list: ["西游记", "红楼梦", "三国演义", "水浒传"]
+                }
+            }
+        }
+
+        //动态路由传参
+        // let item = {
+        //     template: `<div>
+        //     当前所看到得名著是：{{ $route.params.id }}
+        //     </div>`
+        // }
+
+        // query传参
+        let item = {
+            template: `<div>
+            当前所看到得名著是：{{ $route.query.name }}
+            </div>`
+        }
+        // 动态路由传参---query传参
+        const router = new VueRouter({
+            routes: [{
+                path: '/list',
+                component: list
+            }, {
+                //path: '/item/:id?', //加上 ：说明这个值是动态得，变量，不加就是静态字符串,最后如果加上 ？ ，代表这个参数可传可不传
+                path: '/item/',
+                component: item
+            }]
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        });
+    </script>
+</body>
+
+</html>

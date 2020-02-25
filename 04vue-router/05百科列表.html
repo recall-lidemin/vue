@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/list">百科列表</router-link>
+        <router-view></router-view>
+    </div>
+
+    <script src="./vue-router.js"></script>
+    <script>
+        let list = {
+            template: `
+            <div>
+              <router-link to="/info/钱学森">钱学森</router-link>
+                 <router-link to="/info?name=邓稼先">邓稼先</router-link>
+              </div>
+            `
+        }
+        let info = {
+            template: `
+            <div>
+              选择得是：{{ $route.params.name  }}{{ $route.query.name  }}
+            </div>
+            `
+        }
+
+        const router = new VueRouter({
+            routes: [{
+                path: '/list',
+                component: list
+            }, {
+                path: '/info/:name?',
+                component: info
+            }]
+
+        })
+
+
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        });
+    </script>
+</body>
+
+</html>

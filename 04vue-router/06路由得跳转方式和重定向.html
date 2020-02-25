@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./vue-router.js"></script>
+    <style>
+        .menu {
+            width: 800px;
+            margin: 20px auto;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .container {
+            width: 800px;
+            height: 600px;
+            border: 2px solid #ccc;
+            margin: 0 auto;
+        }
+
+        .router-link-active {
+            border: 1px solid skyblue;
+            background-color: hotpink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="menu">
+            <!-- 导航 -->
+            <router-link to="/1">邢菲1</router-link>
+            <!-- 对象得 path形式 跳转 -->
+            <router-link :to="{ path: '/2' }">邢菲2</router-link>
+            <!-- 对象得 name形式 跳转 -->
+            <router-link :to="{ name:'xf3' }">邢菲3</router-link>
+            <router-link to="/4">邢菲4</router-link>
+        </div>
+        <div class="container">
+            <router-view></router-view>
+        </div>
+    </div>
+
+    <script>
+        let xf1 = {
+            template: `<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582561827207&di=12ba7b94eb5a8e65af657e597b6a4106&imgtype=0&src=http%3A%2F%2Fdingyue.nosdn.127.net%2FAOzxWrj5eWfo2SVyHFXhKVofwPLdOwPvfXOBI14a5beHs1556159312557compressflag.jpeg">`
+        }
+        let xf2 = {
+            template: `<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582561827207&di=8924a54349bc782d76372cd547a50d0e&imgtype=0&src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_bt%2F0%2F8653856697%2F1000">`
+        }
+        let xf3 = {
+            template: `<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582561827207&di=b8560a9000d74377d7e78a6d899ceb7d&imgtype=0&src=http%3A%2F%2Fp4.qhimg.com%2Ft018391a22c5b0cdb95.jpg%3Fsize%3D1066x1600">`
+        }
+        let xf4 = {
+            template: `<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1582561827208&di=40d9eff1d2300bb132e336da02e657ba&imgtype=0&src=http%3A%2F%2Fwww.yiren.com.cn%2Fueditor%2Fphp%2Fupload%2Fimage%2F20190118%2F1547776561352424.jpg">`
+        }
+        const router = new VueRouter({
+            routes: [{
+                path: "/",
+                redirect: '/1',
+            }, {
+                path: "/1",
+                component: xf1
+            }, {
+                path: "/2",
+                component: xf2
+            }, {
+                name: 'xf3',
+                path: "/3",
+                component: xf3
+            }, {
+                path: "/4",
+                //重定向，强制跳转，拦截谁，就在谁得路由上写
+                redirect: '/1',
+                component: xf4
+            }]
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        });
+    </script>
+</body>
+
+</html>
