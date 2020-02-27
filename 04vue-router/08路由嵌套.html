@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .second {
+            width: 800px;
+            height: 600px;
+            margin: 20px auto;
+            background-color: hotpink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 根组件 -->
+        <router-link to="/main">主食</router-link>
+        <router-link to="/nonstaplefood">副食</router-link>
+        <router-link to="/drink">饮料</router-link>
+
+        <router-view></router-view>
+    </div>
+
+    <script src="./vue-router.js"></script>
+    <script>
+        // 1.提供二级路由得容器
+        //   二级路由容器，需要写在一级路由得组件里
+        // 2.二级路由表需要配置在一级路由表得 childre 里
+
+        // 案例:
+        // 第一级路由 主食 副食 饮料
+        // 在主食组件下建立二级路由: 列出几种美食
+        let main = {
+            // 路径前面得 / 如果不加就会和之前得路径拼接,加上才是单独完整得路径
+            template: `<div class="second">
+            <h4>主食分类</h4>
+            <router-link to="/main/food?index=0">馒头</router-link>
+            <router-link to="/main/food?index=1">米饭</router-link>
+            <router-link to="/main/food?index=2">刀削面</router-link>
+            <router-link to="/main/food?index=3">肠粉</router-link>
+            
+            <router-view />
+
+            </div>`
+        }
+        let staple = {
+            template: `<div>
+            副食
+            </div>`
+        }
+        let drink = {
+            template: `<div>
+            饮料
+            </div>`
+        }
+
+        const router = new VueRouter({
+            routes: [{
+                path: '/',
+                redirect: '/main'
+            }, {
+                path: '/main',
+                component: main,
+                children: [{
+                    path: 'food', //二级路由地址,二级路由地址如果不以 / 开头,他就会和一级路由地址拼接,如果以 / 开头,就会认为他是完整地址
+                    component: {
+                        template: `
+                                <div>
+                                    您选择得美食是:{{  $route.query.index }}
+                                    <img :src="currentIndex" >
+                                </div>
+                                `,
+                        data() {
+                            return {
+                                list: [
+                                    "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3134950232,1138131887&fm=26&gp=0.jpg",
+                                    "https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3906760867,154029991&fm=26&gp=0.jpg",
+                                    "https://dss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=1162694487,4267004078&fm=58",
+                                    "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2953166901,3529086358&fm=26&gp=0.jpg"
+                                ]
+                            }
+                        },
+                        computed: {
+                            currentIndex() {
+                                return this.list[this.$route.query.index]
+                            }
+                        }
+                    } //二级路由得组件
+                }]
+
+            }, {
+                path: '/nonstaplefood',
+                component: staple
+            }, {
+                path: '/drink',
+                component: drink
+            }]
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        });
+    </script>
+</body>
+
+</html>
