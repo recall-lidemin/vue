@@ -17,7 +17,7 @@ const router = new VueRouter({
         { path: '/heroes', component: Heroes },
         { path: '/weapon', component: Weapon },
         { path: '/equipment', component: Equipment },
-        { path: '/add-edit', component: Add }
+        { path: '/add-edit/:id?', component: Add } //动态传参，加 ？可传可不传
     ]
 })
 

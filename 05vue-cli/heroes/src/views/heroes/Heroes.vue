@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="sub-header">Hero List</h2>
+    <h2 class="sub-header">英雄列表</h2>
     <router-link class="btn btn-success" to="/add-edit">添加英雄</router-link>
     <div class="table-responsive">
       <table class="table table-striped">
@@ -18,8 +18,8 @@
             <td>{{ item.name }}</td>
             <td>{{ item.gender }}</td>
             <td>
-              <a href="edit.html">编辑</a> &nbsp;&nbsp;
-              <a @click="del(item.id)">删除</a>
+              <router-link :to="`/add-edit/${item.id}`">编辑</router-link>&nbsp;&nbsp;
+              <a @click="del(item.id)" style="cursor: pointer">删除</a>
             </td>
           </tr>
         </tbody>
